@@ -42,6 +42,13 @@ public:
         table_[hashcode(key)].put(key, std::move(value));
     }
 
+    int table_length() {
+        return table_.size();
+    }
+    
+    std::vector<K> getkeys(int index) {
+        return table_[index].getkeys();
+    }
 
     void erase(const K &key)
     {
@@ -112,6 +119,15 @@ private:
         {
             std::lock_guard<std::mutex> lock(mutex_);
             return item_.count(key);
+        }
+
+        std::vector<K> getkeys(){
+            std::lock_guard<std::mutex> lock(mutex_);
+            std::vector<K> result;
+            for(auto it = item_.begin(); it != item_.end(); it++) {
+                result.push_back(it -> first);
+            }
+            return result;
         }
 
     private:

@@ -18,10 +18,12 @@ private:
     std::ofstream outfile;
     std::mutex mutex_;
 public:
-    encoder(/* args */);
+    encoder(std::string filepack_);
     int getFileCout();
     void write_record(pb::Record &&record, site &site_);
     pb::Record get_record(site &&site_);
+    int get_current();
+    void close();
 };
 
 

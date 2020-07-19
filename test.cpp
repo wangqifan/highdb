@@ -42,18 +42,13 @@ bool is_write(std::string &key, std::string &value, std::ofstream &outfile) {
 */
 int main() {
   
-   highdb highdb_;
+   highdb highdb_("data/");
    for(int i = 0; i < 10000; i++) {
-       pb::Record record;
-
-       record.set_key(std::to_string(i));
-       record.set_value("value" + std::to_string(i));
-       record.set_type(1);
-       std::cout << record.key() << " " << record.value() << std::endl;
-       highdb_.add(std::move(record));
        std::string key = std::to_string(i);
-       std::string value = highdb_.get(key);
-       std::cout << "key: " << key <<" value: " <<value << std::endl;
+       std::string value = "very long very long pretty long " + key;
+       highdb_.add(key, std::move(value));
+       std::string nvalue = highdb_.get(key);
+       std::cout << "key: " << key <<" value: " << nvalue << std::endl;
    }
    return 0;
 }

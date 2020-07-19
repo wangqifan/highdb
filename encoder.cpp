@@ -1,9 +1,16 @@
 #include "encoder.h"
 
 #include <dirent.h>
+#include <sys/stat.h> 　
+#include <sys/types.h>
 
-encoder::encoder():
-   mutex_() {
+encoder::encoder(std::string filepack_):
+   mutex_(),
+   filepack(filepack_) {
+    DIR *dir = opendir(filepack.c_str());
+    if(dir == NULL) {
+        mkdir(filepack.c_str(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRWXG | S_IRWXO);
+    }
     current_file = getFileCout();
     if(current_file == 0) current_file++;
     outfile.open(filepack + std::to_string(current_file) + ".dat", std::ios::out | std::ios::binary | std::ios::app);
@@ -56,4 +63,11 @@ pb::Record encoder::get_record(site &&site_) {
     pb::Record record;
     record.ParseFromArray(buffer, len);
     return record;
+}
+int encoder::get_current() {
+    return current_file;
+}
+
+void encoder::close() {
+    outfile.close();
 }
