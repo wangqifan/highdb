@@ -45,11 +45,15 @@ int main() {
    highdb highdb_;
    for(int i = 0; i < 10000; i++) {
        pb::Record record;
+
        record.set_key(std::to_string(i));
-       record.set_value("value");
+       record.set_value("value" + std::to_string(i));
        record.set_type(1);
        std::cout << record.key() << " " << record.value() << std::endl;
        highdb_.add(std::move(record));
+       std::string key = std::to_string(i);
+       std::string value = highdb_.get(key);
+       std::cout << "key: " << key <<" value: " <<value << std::endl;
    }
    return 0;
 }

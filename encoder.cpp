@@ -41,10 +41,12 @@ void encoder::write_record(pb::Record &&record, site &site_) {
     record.SerializePartialToOstream(&outfile);
     outfile << std::endl;
     site_.file = current_file;
+    site_.offset = pos;
 }
 
 pb::Record encoder::get_record(site &&site_) {
     std::string filepath = filepack + std::to_string(site_.file) + ".dat";
+    std::cout << filepath << " " << site_.file << site_.offset << std::endl;
     std::ifstream inFile(filepath, std::ios::in | std::ios::binary);
     inFile.seekg(site_.offset);
     int len;

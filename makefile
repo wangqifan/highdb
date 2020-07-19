@@ -19,3 +19,4 @@ clean :
 	echo ${TARGET}
 	echo ${OBJECTS}
 	-rm ${TARGET} *.o
+	rm data/*.dat
