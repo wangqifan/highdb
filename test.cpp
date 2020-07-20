@@ -43,12 +43,15 @@ bool is_write(std::string &key, std::string &value, std::ofstream &outfile) {
 int main() {
   
    highdb highdb_("data/");
-   for(int i = 0; i < 10000; i++) {
+   for(int i = 0; i < 1000; i++) {
        std::string key = std::to_string(i);
        std::string value = "very long very long pretty long " + key;
        highdb_.add(key, std::move(value));
        std::string nvalue = highdb_.get(key);
        std::cout << "key: " << key <<" value: " << nvalue << std::endl;
    }
+   highdb_.merge();
+   std::string tempkey = "12";
+   std::cout <<  highdb_.get(tempkey) << std::endl;
    return 0;
 }

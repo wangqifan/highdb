@@ -71,3 +71,8 @@ int encoder::get_current() {
 void encoder::close() {
     outfile.close();
 }
+
+void encoder::reset(int current, std::string package) {
+    current_file = current;
+    filepack = package;
+}

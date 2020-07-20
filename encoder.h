@@ -13,13 +13,14 @@ class encoder
 {
 private:
     int current_file;
-    const std::string filepack = "data/";
+    std::string filepack = "data/";
     const int long maxsize = 1024;
     std::ofstream outfile;
     std::mutex mutex_;
 public:
     encoder(std::string filepack_);
     int getFileCout();
+    void reset(int current, std::string package);
     void write_record(pb::Record &&record, site &site_);
     pb::Record get_record(site &&site_);
     int get_current();
